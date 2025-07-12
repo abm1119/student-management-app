@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<gradeMappings>
+	<grade letter="A+" points="4.00" />
+	<grade letter="A" points="4.00" />
+	<grade letter="A-" points="3.67" />
+	<grade letter="B+" points="3.33" />
+	<grade letter="B" points="3.00" />
+	<grade letter="B-" points="2.67" />
+	<grade letter="C+" points="2.33" />
+	<grade letter="C" points="2.00" />
+	<grade letter="C-" points="1.67" />
+	<grade letter="D+" points="1.33" />
+	<grade letter="D" points="1.00" />
+	<grade letter="F" points="0.00" />
+	<grade letter="W" points="0.00" isPlaceholder="true" />
+	<grade letter="I" points="0.00" isPlaceholder="true" />
+</gradeMappings>

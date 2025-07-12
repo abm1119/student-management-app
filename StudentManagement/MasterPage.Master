@@ -1,0 +1,402 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterPage.master.cs" Inherits="StudentManagement.MasterPage" %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Academic Portal for managing student records, courses, semesters, grades, and reports." />
+    <title><%: Page.Title %> - Academic Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2b6cb0; /* Softer Blue */
+            --primary-hover-color: #1a4971;
+            --secondary-color: #4a5568; /* Slate Gray */
+            --background-color: #f7fafc; /* Off-White Background */
+            --card-background-color: #ffffff;
+            --text-color: #1a202c;
+            --light-text-color: #edf2f7;
+            --border-color: #e2e8f0;
+            --success-color: #38a169;
+            --error-color: #e53e3e;
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --border-radius: 6px;
+            --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background-color: var(--primary-color);
+            color: var(--light-text-color);
+            padding: 1rem 2rem;
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: var(--transition);
+        }
+
+        .header .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: var(--light-text-color);
+            transition: var(--transition);
+        }
+
+        .header .logo:hover {
+            opacity: 0.9;
+        }
+
+        .navigation {
+            display: flex;
+            align-items: center;
+        }
+
+        .navigation ul {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .navigation ul li a {
+            color: var(--light-text-color);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .navigation ul li a:hover,
+        .navigation ul li a.active {
+            background-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: var(--light-text-color);
+            font-size: 1.5rem;
+            padding: 0.5rem;
+        }
+
+        .main-container {
+            flex: 1;
+            width: 90%;
+            max-width: 1280px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: var(--card-background-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .footer {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: #2d3748;
+            color: var(--light-text-color);
+            font-size: 0.875rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        h1 { font-size: 2rem; margin-bottom: 1.5rem; }
+        h2 { font-size: 1.5rem; margin-bottom: 1rem; }
+        h3 { font-size: 1.25rem; margin-bottom: 0.75rem; }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--secondary-color);
+        }
+
+        .form-control,
+        .aspNetDisabled {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+            background-color: var(--card-background-color);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(43, 108, 176, 0.2);
+            outline: none;
+        }
+
+        .aspNetDisabled {
+            background-color: #edf2f7;
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--light-text-color);
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover-color);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #2d3748;
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+        }
+
+        .btn-success:hover {
+            background-color: #2f855a;
+        }
+
+        .btn-danger {
+            background-color: var(--error-color);
+        }
+
+        .btn-danger:hover {
+            background-color: #c53030;
+        }
+
+        .message-container {
+            margin-bottom: 1.5rem;
+        }
+
+        .message {
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            border: 1px solid transparent;
+            animation: slideIn 0.3s ease-in;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .message.success {
+            background-color: #e6fffa;
+            color: #2f855a;
+            border-color: #b5f5ec;
+        }
+
+        .message.error {
+            background-color: #fff5f5;
+            color: #c53030;
+            border-color: #feb2b2;
+        }
+
+        .message.info {
+            background-color: #e6f3ff;
+            color: #2b6cb0;
+            border-color: #bee3f8;
+        }
+
+        .gridview {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 1.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+        }
+
+        .gridview th, .gridview td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .gridview th {
+            background-color: #edf2f7;
+            color: var(--secondary-color);
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+        }
+
+        .gridview tr:last-child td {
+            border-bottom: none;
+        }
+
+        .gridview tr:hover td {
+            background-color: #f7fafc;
+        }
+
+        .gridview-footer td {
+            font-weight: 600;
+            background-color: #f7fafc;
+        }
+
+        .gridview-emptydatarow td {
+            padding: 1.5rem;
+            text-align: center;
+            color: var(--secondary-color);
+            font-style: italic;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 1rem;
+            }
+
+            .navigation {
+                display: none;
+                width: 100%;
+            }
+
+            .navigation.active {
+                display: block;
+            }
+
+            .navigation ul {
+                flex-direction: column;
+                gap: 0.5rem;
+                margin-top: 1rem;
+            }
+
+            .navigation ul li a {
+                display: block;
+                padding: 0.75rem;
+            }
+
+            .hamburger {
+                display: block;
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+            }
+
+            .main-container {
+                width: 95%;
+                padding: 1rem;
+                margin: 1rem auto;
+            }
+
+            .form-control,
+            .aspNetDisabled {
+                width: 100%;
+            }
+        }
+    </style>
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <header class="header">
+            <a href="~/Default.aspx" runat="server" class="logo">Academic Portal</a>
+            <button class="hamburger" aria-label="Toggle navigation">☰</button>
+            <nav class="navigation">
+                <ul>
+                    <li><a href="~/Default.aspx" runat="server">Dashboard</a></li>
+                    <li><a href="~/AddStudent.aspx" runat="server">Students</a></li>
+                    <li><a href="~/AddCourse.aspx" runat="server">Courses</a></li>
+                    <li><a href="~/AddSemester.aspx" runat="server">Semesters</a></li>
+                    <li><a href="~/EnterGrades.aspx" runat="server">Grades</a></li>
+                    <li><a href="~/ViewReport.aspx" runat="server">Reports</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <div class="main-container">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+
+        <footer class="footer">
+            <p>Built with ❤️ by <strong>Abdul Basit Memon</strong></p>
+            <p>© <%: DateTime.Now.Year %> - Student Academic Management System. All rights reserved.</p>
+        </footer>
+
+        <asp:ContentPlaceHolder ID="ScriptsContent" runat="server">
+        </asp:ContentPlaceHolder>
+        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:StudentAcademicDBConnectionString %>" ProviderName="<%$ ConnectionStrings:StudentAcademicDBConnectionString.ProviderName %>" SelectCommand="SELECT * FROM Users"></asp:SqlDataSource>
+    </form>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('.navigation');
+
+            hamburger.addEventListener('click', () => {
+                nav.classList.toggle('active');
+                hamburger.textContent = nav.classList.contains('active') ? '✕' : '☰';
+            });
+
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    document.querySelector(anchor.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
